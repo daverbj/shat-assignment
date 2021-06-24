@@ -1,5 +1,6 @@
 const express = require("express")
 const User = require("./models/user")
+const encryptPass = require("./util/encrypt-pass");
 const router = express.Router()
 
 // Get all posts
@@ -14,7 +15,7 @@ router.post("/user", async (req, res) => {
         username: req.body.username,
         age: req.body.age,
         score: req.body.score,
-        password: req.body.password,
+        password: encryptPass(req.body.password),
     })
     await user.save()
     res.send(user)
