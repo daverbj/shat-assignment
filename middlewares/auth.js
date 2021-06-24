@@ -9,7 +9,7 @@ async function verifyToken(req, res, next) {
             const userDetails = jwt.verify(token, process.env.SECRET)
             if (userDetails) {
                 const user = await User.findById(userDetails.userId)
-                user ? req.loggedInUser = user : res.sendStatus(403)
+                user ? req.loggedInUser = user._doc : res.sendStatus(403)
             } else {
                 res.sendStatus(403)
             }

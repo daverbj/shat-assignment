@@ -4,7 +4,7 @@ const bcrypt = require("bcrypt");
 const jwt = require('jsonwebtoken');
 
 async function getUserById(req, res) {
-    if (req.loggedInUser.userId !== req.params.id) res.sendStatus(403)
+    if (req.loggedInUser._id.toString() !== req.params.id) res.sendStatus(403)
     const user = await User.findById(req.params.id)
     res.send(user)
 }
