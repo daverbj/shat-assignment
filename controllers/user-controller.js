@@ -1,5 +1,7 @@
 const User = require("../models/user")
 const encryptPass = require("../util/encrypt-pass");
+const bcrypt = require("bcrypt");
+const jwt = require('jsonwebtoken');
 
 async function getUserById(req, res) {
     const user = await User.findById(req.params.id)
@@ -15,4 +17,27 @@ async function createUser(req, res){
     await user.save()
     res.send(user)
 }
-module.exports = { getUserById, createUser }
+async function login(req, res){
+
+    const user = await User.findOne({
+        username: req.body.username
+    })
+    if (user) {
+        if ( bcrypt.compareSync(req.body.password, user.password)) {
+            const token = jwt.sign({username : user.username, userId: user._id}, process.env.SECRET)
+            return res.status(200).json({
+                status:"SUCCESS",
+                token: token
+            })
+        } else {
+            return res.status(403).json({
+                status:"FAIL",
+            })
+        }
+    } else {
+        return res.status(403).json({
+            status:"FAIL",
+        })
+    }
+}
+module.exports = { getUserById, createUser, login }
