@@ -3,10 +3,9 @@ const User = require("./models/user")
 const encryptPass = require("./util/encrypt-pass");
 const router = express.Router()
 
-// Get all posts
-router.get("/user", async (req, res) => {
-    const users = await User.find()
-    res.send(users)
+router.get("/user/:id", async (req, res) => {
+    const user = await User.findById(req.params.id)
+    res.send(user)
 })
 
 router.post("/user", async (req, res) => {
