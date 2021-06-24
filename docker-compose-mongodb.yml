@@ -7,6 +7,10 @@ services:
       - MONGO_INITDB_ROOT_USERNAME=${MONGO_ROOT_USER}
       - MONGO_INITDB_ROOT_PASSWORD=${MONGO_ROOT_PASSWORD}
       - MONGO_INITDB_DATABASE=assignment
+    env_file:
+      - ./.env
+    ports:
+      - "27017:27017"
   mongo-express:
     image: mongo-express
     environment:
@@ -18,6 +22,8 @@ services:
       - ME_CONFIG_MONGODB_ADMINPASSWORD=${MONGO_ROOT_PASSWORD}
       - ME_CONFIG_BASICAUTH_USERNAME=${MONGOEXPRESS_LOGIN}
       - ME_CONFIG_BASICAUTH_PASSWORD=${MONGOEXPRESS_PASSWORD}
+    env_file:
+      - ./.env
     links:
       - mongo
     ports:
