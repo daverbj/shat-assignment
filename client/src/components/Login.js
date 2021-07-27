@@ -12,7 +12,7 @@ const Login = ({ title, history }) => {
         event.preventDefault()
         console.log(username, password)  
         try {
-            let result = await axios.post("http://localhost:5000/api/login", {
+            let result = await axios.post("http://40.114.229.80/api/login", {
             username, password
             })
             console.log(result)

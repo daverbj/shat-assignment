@@ -1,0 +1,4 @@
+az network public-ip create --resource-group MC_POC_shpoc_westeurope --name shPocPublicIPForIngress --sku Standard --allocation-method static --query publicIp.ipAddress -o tsv
+
+40.114.229.80
+

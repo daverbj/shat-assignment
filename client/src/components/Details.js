@@ -6,7 +6,7 @@ const DetailsComponent = () => {
     const [userData, setUserData] = useState({})
     useEffect(() => {
         async function fetchData(){
-            let result = await axios.get(`http://localhost:5001/api/user/${localStorage.getItem("userid")}`)
+            let result = await axios.get(`http://40.114.229.80/api/user/${localStorage.getItem("userid")}`)
             setUserData(result.data)
         }
         fetchData()
