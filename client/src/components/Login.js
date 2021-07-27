@@ -1,21 +1,31 @@
 import 'bootstrap/dist/css/bootstrap.min.css'
-import { Form, Button } from 'react-bootstrap'
+import { Form, Button, Alert } from 'react-bootstrap'
 import { useState } from 'react'
 import axios from 'axios'
-function Login() {
+const Login = ({ title, history }) => {
   const [username, setUserName] = useState('')
   const [password, setPassword] = useState('')
+  const [isLoginFailed, setLoginFailed] = useState(false)
   return (
     <div className="container">
       <Form onSubmit={async (event) => {
         event.preventDefault()
         console.log(username, password)  
-        let result = await axios.post("http://localhost:5000/api/login", {
-          username, password
-        })
-        console.log(result)
+        try {
+            let result = await axios.post("http://localhost:5000/api/login", {
+            username, password
+            })
+            console.log(result)
+            localStorage.setItem("userid", result.data.userid)
+            setLoginFailed(false)
+            // navigate to details screen
+            history.push('/details')
+        } catch(e) {
+            setLoginFailed(true)
+        }
       }}>
         <Form.Group className="mb-3" controlId="formBasicEmail">
+          { isLoginFailed? <Alert variant="danger">Logon failed</Alert> : <></> }          
           <Form.Label>User Name</Form.Label>
           <Form.Control placeholder="Enter email" onChange={(event) => { 
             const { value } = event.target;

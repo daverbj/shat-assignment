@@ -28,7 +28,8 @@ async function login(req, res){
             const token = jwt.sign({username : user.username, userId: user._id}, process.env.SECRET)
             return res.status(200).json({
                 status:"SUCCESS",
-                token: token
+                token: token,
+                userid: user._id
             })
         } else {
             return res.status(403).json({
